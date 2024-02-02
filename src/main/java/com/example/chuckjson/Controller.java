@@ -50,7 +50,7 @@ public class Controller {
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         System.out.println(response.body());
 
-        // reads JSON object's (key, value) pairs and store the values in my object's fields
+        // read 1 JSON object (its "key":"value" pairs) into the fields of a ChuckNorrisJoke object.
         ObjectMapper objectMapper = new ObjectMapper();
         ChuckNorrisJoke joke = objectMapper.readValue(response.body(), ChuckNorrisJoke.class);
         jokesTV.getItems().add(joke);
@@ -71,12 +71,11 @@ public class Controller {
         // Read JSON objects using JsonNode after readTree()
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(response.body());
-        // By reading the JSON tree, the code can now get individual key:value pairs
-        //
-        // Now you can navigate through the JsonNode to access specific elements
-        // For example, to access the "sport_title" of the first item in the array:
+        // By reading the JSON tree, the code can now get individual "key":"value" pairs
+        // The value of the "result" key is an ARRAY of JSON objects
         JsonNode arrayOfJokes = jsonNode.get("result");
         for (JsonNode eachJoke : arrayOfJokes) {
+            // read 1 JSON object (its "key":"value" pairs) into the fields of a ChuckNorrisJoke object.
             ChuckNorrisJoke newJoke = new ChuckNorrisJoke();
             newJoke.setCategories(objectMapper.convertValue(eachJoke.get("categories"), ArrayList.class));
             newJoke.setCreatedAt(eachJoke.get("created_at").asText());
