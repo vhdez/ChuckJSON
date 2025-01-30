@@ -3,6 +3,8 @@ package com.example.chuckjson;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -12,7 +14,7 @@ public class ChuckNorrisJoke {
     ArrayList<String> categories;
 
     @JsonProperty("created_at")
-    Date createdAt;
+    LocalDate createdAt;
 
     @JsonProperty("icon_url")
     String iconUrl;
@@ -21,7 +23,7 @@ public class ChuckNorrisJoke {
     String id;
 
     @JsonProperty("updated_at")
-    Date updatedAt;
+    LocalDate updatedAt;
 
     @JsonProperty("url")
     String url;
@@ -32,7 +34,7 @@ public class ChuckNorrisJoke {
     public ChuckNorrisJoke() {
     }
 
-    public ChuckNorrisJoke(ArrayList<String> categories, Date created_at, String iconUrl, String id, Date updatedAt, String url, String value) {
+    public ChuckNorrisJoke(ArrayList<String> categories, LocalDate created_at, String iconUrl, String id, LocalDate updatedAt, String url, String value) {
         this.categories = categories;
         this.createdAt = created_at;
         this.iconUrl = iconUrl;
@@ -50,17 +52,18 @@ public class ChuckNorrisJoke {
         this.categories = categories;
     }
 
-    public Date getCreatedAt() {
+    public LocalDate getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDate createdAt) {
         this.createdAt = createdAt;
     }
 
     public void setCreatedAt(String createdAtString) throws Exception {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        this.createdAt = dateFormatter.parse(createdAtString);
+        String timeWithoutHours = createdAtString.substring(0, createdAtString.indexOf(" "));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        createdAt = LocalDate.parse(timeWithoutHours, formatter);
     }
     public String getIconUrl() {
         return iconUrl;
@@ -78,16 +81,17 @@ public class ChuckNorrisJoke {
         this.id = id;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDate getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDate updatedAt) {
         this.updatedAt = updatedAt;
     }
     public void setUpdatedAt(String updatedAtString) throws Exception {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        this.updatedAt = dateFormatter.parse(updatedAtString);
+        String timeWithoutHours = updatedAtString.substring(0, updatedAtString.indexOf(" "));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        updatedAt = LocalDate.parse(timeWithoutHours, formatter);
     }
 
     public String getUrl() {

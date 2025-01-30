@@ -24,7 +24,7 @@ public class Controller {
     public TableView<ChuckNorrisJoke> jokesTV;
     public TableColumn<ChuckNorrisJoke, String> jokesColumn;
     public TableColumn<ChuckNorrisJoke, String> dateColumn;
-    public Button randomButton;
+    public Button randomButton1;
     public Button clearButton;
     public TextField searchTextField;
     public ImageView chuckImageView;
@@ -48,7 +48,7 @@ public class Controller {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        System.out.println("JOKE: " + response.body());
 
         // read 1 JSON object (its "key":"value" pairs) into the fields of a ChuckNorrisJoke object.
         ObjectMapper objectMapper = new ObjectMapper();
@@ -66,7 +66,7 @@ public class Controller {
                 .method("GET", HttpRequest.BodyPublishers.noBody())
                 .build();
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response.body());
+        System.out.println("JOKES: " + response.body());
 
         // Read JSON objects using JsonNode after readTree()
         ObjectMapper objectMapper = new ObjectMapper();
